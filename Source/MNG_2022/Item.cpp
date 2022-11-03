@@ -19,7 +19,8 @@ void AItem::BeginPlay()
 	Super::BeginPlay();
 	if (ScoreTextWidget)
 	{
-
+		Shots = 3;
+		Pulls = 5;
 		pScoreTextWidget = CreateWidget<UUserWidget>(GetGameInstance(), ScoreTextWidget);
 			
 		if (pScoreTextWidget.IsValid())
@@ -28,6 +29,8 @@ void AItem::BeginPlay()
 			pScoreTextWidget-> AddToViewport();
 
 			pScoreText = (UTextBlock*)pScoreTextWidget->GetWidgetFromName("ScoreText");
+			pPullsText = (UTextBlock*)pScoreTextWidget->GetWidgetFromName("PullsText");
+			pShotsText = (UTextBlock*)pScoreTextWidget->GetWidgetFromName("ShotsText");
 		}
 	}
 	
@@ -49,9 +52,41 @@ void AItem::IncreaseScore(int amount)
 	}
 }
 
+void AItem::DecreasePulls(int amount)
+{
+	// Increase the score and update the text widget
+	if (pPullsText.IsValid()) {
+		Pulls -= amount;
+		pPullsText->SetText(FText::FromString(FString::FromInt(Pulls)));
+	}
+}
+
+void AItem::DecreaseShots(int amount)
+{
+	// Increase the score and update the text widget
+	if (pShotsText.IsValid()) {
+		Shots -= amount;
+		pShotsText->SetText(FText::FromString(FString::FromInt(Shots)));
+	}
+}
+
 int AItem::GetScore() const 
 {
 	return Score;
 }
 
+void AItem::ResetShots()
+{
+	if (pShotsText.IsValid()) {
+		Shots = 3;
+		pShotsText->SetText(FText::FromString(FString::FromInt(Shots)));
+	}
+}
 
+void AItem::ResetPulls()
+{
+	if (pPullsText.IsValid()) {
+		Pulls = 5;
+		pPullsText->SetText(FText::FromString(FString::FromInt(Pulls)));
+	}
+}

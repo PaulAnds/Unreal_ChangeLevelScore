@@ -18,13 +18,28 @@ public:
 	TSubclassOf<class UUserWidget> ScoreTextWidget;
 	TWeakObjectPtr<class UUserWidget> pScoreTextWidget;
 	TWeakObjectPtr<class UTextBlock> pScoreText;
+	TWeakObjectPtr<class UTextBlock> pPullsText;
+	TWeakObjectPtr<class UTextBlock> pShotsText;
 
 	// Exposed function to Blueprints
 	UFUNCTION(BlueprintCallable, Category = "Score")
 	void IncreaseScore(int amount);
 
+	UFUNCTION(BlueprintCallable, Category = "Pulls")
+		void DecreasePulls(int amount);
+
+	UFUNCTION(BlueprintCallable, Category = "Shots")
+		void DecreaseShots(int amount);
+
+	UFUNCTION(BlueprintCallable, Category = "Shots")
+	void ResetShots();
+
+	UFUNCTION(BlueprintCallable, Category = "Pulls")
+	void ResetPulls();
+
 	UFUNCTION(BlueprintCallable, Category = "Score")
-		int GetScore() const;
+	int GetScore() const;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -34,4 +49,6 @@ public:
 	virtual void Tick(float DeltaTime) override;
 private:
 	int Score;
+	int Pulls;
+	int Shots;
 };
